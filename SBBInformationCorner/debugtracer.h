@@ -1,5 +1,6 @@
 #pragma once
 
+#include <LiquidCrystal.h>
 #include <string>
 
 class DebugTracer {
@@ -14,6 +15,8 @@ class DebugTracer {
     void printDebug (const std::string& information);
 
   private:
+    
+    LiquidCrystal mLiquidCrystalDisplay;
     
     DebugTracer ();
 

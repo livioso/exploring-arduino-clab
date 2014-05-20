@@ -24,14 +24,15 @@
 #include <system_configuration.h>
 #include <unwind-cxx.h>
 #include <utility.h>
+#include <LiquidCrystal.h>
+//LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 
 #include "debugtracer.h"
 #include <string>
 
 // Enter a MAC address and IP address for your controller below.
 // The IP address will be dependent on your local network:
-byte mac[] = { 
-  0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
+byte mac[] = {0x90, 0xA2, 0xDA, 0x0D, 0xEA, 0x17 };
 IPAddress ip(192,168,0,124);
 
 // Initialize the Ethernet server library
@@ -46,17 +47,21 @@ void setup() {
     ; // wait for serial port to connect. Needed for Leonardo only
   }
   
+  Serial.begin(9600);
   // start the Ethernet connection and the server:
-  Ethernet.begin(mac, ip);
+  Ethernet.begin(mac);
   server.begin();
   Serial.print("server is at ");
-  Serial.println(Ethernet.localIP());
+  Serial.print(Ethernet.localIP());
+  
+   DebugTracer::getInstance().printDebug("Holla");
+  
 }
 
 
 void loop() {
   
-  DebugTracer::getInstance().printDebug("Holla");
+  //DebugTracer::getInstance().printDebug("Holla");
   
   std::string test("test");
   // listen for incoming clients

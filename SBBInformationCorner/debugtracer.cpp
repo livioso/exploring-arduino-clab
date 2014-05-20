@@ -2,9 +2,11 @@
 #include "Arduino.h"
 #include <string>
 
-DebugTracer::DebugTracer ()
+DebugTracer::DebugTracer () 
+  : mLiquidCrystalDisplay(12, 11, 5, 4, 3, 2)
 {
-  Serial.begin(9600);
+  mLiquidCrystalDisplay.begin(16, 2);
+  //Serial.begin(9600);
 }
 
 DebugTracer& DebugTracer::getInstance ()
@@ -18,5 +20,6 @@ DebugTracer& DebugTracer::getInstance ()
 
 void DebugTracer::printDebug (const std::string& information) 
 {
-  Serial.println(information.c_str());
+  mLiquidCrystalDisplay.print(information.c_str());
+  //Serial.println(information.c_str());
 }
