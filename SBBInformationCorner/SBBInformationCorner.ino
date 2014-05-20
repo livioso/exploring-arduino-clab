@@ -14,10 +14,19 @@
  by Tom Igoe
  
  */
+ 
+
 
 #include <SPI.h>
 #include <Ethernet.h>
-#include <debugtracer.h>
+
+#include <StandardCplusplus.h>
+#include <system_configuration.h>
+#include <unwind-cxx.h>
+#include <utility.h>
+
+#include "debugtracer.h"
+#include <string>
 
 // Enter a MAC address and IP address for your controller below.
 // The IP address will be dependent on your local network:
@@ -30,14 +39,13 @@ IPAddress ip(192,168,0,124);
 // (port 80 is default for HTTP):
 EthernetServer server(80);
 
+
 void setup() {
  // Open serial communications and wait for port to open:
-  Serial.begin(9600);
    while (!Serial) {
     ; // wait for serial port to connect. Needed for Leonardo only
   }
-
-
+  
   // start the Ethernet connection and the server:
   Ethernet.begin(mac, ip);
   server.begin();
@@ -47,6 +55,10 @@ void setup() {
 
 
 void loop() {
+  
+  DebugTracer::getInstance().printDebug("Holla");
+  
+  std::string test("test");
   // listen for incoming clients
   EthernetClient client = server.available();
   if (client) {
