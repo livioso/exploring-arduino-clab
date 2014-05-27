@@ -3,26 +3,26 @@
 #include <LiquidCrystal.h>
 #include <string>
 
-class DebugTracer {
+class LCD {
   
   public:
    
     // get the singleton and 
     // instantiate it on the first call
-    static DebugTracer& getInstance ();
+    static LCD& getInstance ();
 
     // print the debug information to the serial port 9600
-    void printDebug (const std::string& information);
+    void printMessage (const std::string& information);
 
   private:
-    
+  
     LiquidCrystal mLiquidCrystalDisplay;
     
-    DebugTracer ();
+    LCD ();
 
     // copying the singleton is not allowed
-    DebugTracer (DebugTracer const&);
+    LCD (LCD const&);
 
     // same applies to copies due to assignments 
-    void operator= (DebugTracer const&);
+    void operator= (LCD const&);
 };

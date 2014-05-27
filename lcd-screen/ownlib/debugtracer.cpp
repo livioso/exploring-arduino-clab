@@ -2,24 +2,26 @@
 #include "Arduino.h"
 #include <string>
 
-DebugTracer::DebugTracer () 
+LCD::LCD () 
   : mLiquidCrystalDisplay(12, 11, 5, 4, 3, 2)
 {
   mLiquidCrystalDisplay.begin(16, 2);
+  mLiquidCrystalDisplay.print("ho");
   //Serial.begin(9600);
 }
 
-DebugTracer& DebugTracer::getInstance ()
+LCD& LCD::getInstance ()
 {
   // Instantiated on first use:
   // Guaranteed to be destroyed.
-  static DebugTracer instance;
+  static LCD instance;
+  
   return instance;
 }
 
 
-void DebugTracer::printDebug (const std::string& information) 
+void LCD::printMessage (const std::string& information) 
 {
-  mLiquidCrystalDisplay.print(information.c_str());
-  //Serial.println(information.c_str());
+  //mLiquidCrystalDisplay.print(information.c_str());
+  Serial.println(information.c_str());
 }
