@@ -61,9 +61,7 @@ void buzzCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, 
 	 * version of the delay number into our integer buzzDelay
 	 * variable */
         
-        
-        messages.push_back(value);
-        Serial.println(messages.at(0).c_str());
+          messages.push_back(value);
       }
     } while (repeat);
     
@@ -79,9 +77,8 @@ void buzzCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, 
   /* we don't output the body for a HEAD request */
   if (type == WebServer::GET)
   {
-//    messages.push_back("asdf");
-//        messages.push_back("asdf2");
     /* store the HTML in program memory using the P macro */
+   
     std::string html = 
     "<body>\
     <form action='/buzz' method='POST'>\
@@ -89,21 +86,18 @@ void buzzCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, 
         <input type='submit' value='Senden'>\
     </form>\
     <div id='messages'>";
-     
-    for (std::vector<std::string>::const_iterator iter = messages.begin(); iter != messages.end(); ++iter) {
-      html.append("<p>");  
-      html.append(*iter);
-      html.append("</p>");
-    }
     
-    html.append("</div>\
-    </body>");
-  
-  const unsigned char* c = (const unsigned char*) html.c_str();
-  char* cstr = new char[html.length()+1];
-  std::strncpy (cstr, html.c_str(), html.size());
-  Serial.println(cstr);
-    server.printP(cstr);
+   server.print(html.c_str());
+
+    for (std::vector<std::string>::const_iterator iter = messages.begin(); iter != messages.end(); ++iter) {
+       server.print("<p>");
+       server.print(iter->c_str());
+       server.print("</p>");
+    }
+
+    server.print("</div></body>");
+
+    
   }
 }
 
