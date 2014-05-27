@@ -9,7 +9,7 @@
 #include <WebServer.h>
 #include <string>
 #include <cstring>
-#include <vector>
+#include <list>
 
 /* CHANGE THIS TO YOUR OWN UNIQUE VALUE.  The MAC number should be
  * different from any other devices on your network or you'll have
@@ -21,7 +21,7 @@ static uint8_t mac[] = {0x90, 0xA2, 0xDA, 0x0D, 0xEA, 0x17 };
  * standard HTTP service port */
 #define PREFIX "/buzz"
 WebServer webserver(PREFIX, 80);
-std::vector<std::string> messages;
+std::list<std::string> messages;
 
 /* the piezo speaker on the Danger Shield is on PWM output pin #3 */
 #define BUZZER_PIN 3
@@ -61,7 +61,7 @@ void buzzCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, 
 	 * version of the delay number into our integer buzzDelay
 	 * variable */
         
-          messages.push_back(value);
+          messages.push_front(value);
       }
     } while (repeat);
     
@@ -89,7 +89,7 @@ void buzzCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, 
     
    server.print(html.c_str());
 
-    for (std::vector<std::string>::const_iterator iter = messages.begin(); iter != messages.end(); ++iter) {
+    for (std::list<std::string>::const_iterator iter = messages.begin(); iter != messages.end(); ++iter) {
        server.print("<p>");
        server.print(iter->c_str());
        server.print("</p>");
