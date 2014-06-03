@@ -51,7 +51,7 @@ void chatCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, 
 	/* use the STRing TO Unsigned Long function to turn the string
 	 * version of the delay number into our integer buzzDelay
 	 * variable */
-          
+
           if (messages.size() == 7) {
             messages.pop_back();
           }
@@ -80,7 +80,7 @@ void chatCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, 
     server.print("<h1>Arduino Webchat (http://10.84.98.16/chat)</h1>");
     server.print("<p>Livio Bieri & Marius Küng clabC 2iCa</p>");
     server.print("<form action='/chat' method='POST'>");
-    server.print("<p><label>Nachricht:</label><input type='text' name='message'/ maxlength='7'></p>");
+    server.print("<p><label>Nachricht:</label><input type='text' name='message' maxlength='7'></p>");
     server.print("<input type='submit' value='Senden'></form>");
     server.print("<h2>Chat</h2>");
     server.print("<div id='messages'>");
@@ -122,4 +122,5 @@ void loop()
   // process incoming connections one at a time forever
   webserver.processConnection();
 }
+
 
