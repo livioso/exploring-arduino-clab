@@ -69,6 +69,34 @@ void chatCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, 
     /* store the HTML in program memory using the P macro */
 
     std::string html =
+    "<html>\
+    <meta http-equiv='content-type' content='text/html; charset=UTF-8'>\
+    <body>\
+    <style type='text/css'>\
+        body {\
+            font: 16px Helvetica, Arial;\
+        }\
+        h2 {\
+            margin-top: 2em;\
+        }\
+        .message span {\
+            padding-right: 2em;\
+        }\
+    </style>\
+    <h1>Arduino Webchat ({{IP-Adresse/buzz}})</h1>\
+    <p>Livio Bieri & Marius Küng clabC 2iCa</p>\
+    <form action='/buzz' method='POST'>\
+        <p><label>Benutzername:</label><input type='text' name='message'/></p>\
+        <p><label>Nachricht:</label><input type='text' name='message'/></p>\
+        <imput type='hidden' value='{{username}}'>\
+        <input type='submit' value='Senden'>\
+    </form>\
+    <h2>Chat</h2>\
+    <div id='messages'>";
+
+
+
+
     "<body>\
     <form action='/chat' method='POST'>\
         <label>Message:</label><input type='text' name='message'/>\
@@ -79,12 +107,12 @@ void chatCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, 
    server.print(html.c_str());
 
     for (std::list<std::string>::const_iterator iter = messages.begin(); iter != messages.end(); ++iter) {
-       server.print("<p>");
+       server.print("<p class='message'><span>Marius 30.05.14 11:00:</span>");
        server.print(iter->c_str());
        server.print("</p>");
     }
 
-    server.print("</div></body>");
+    server.print("</div></body></html>");
 
   }
 }
