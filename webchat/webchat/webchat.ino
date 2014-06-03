@@ -24,7 +24,6 @@ static uint8_t mac[] = {0x90, 0xA2, 0xDA, 0x0D, 0xEA, 0x17 };
 WebServer webserver(PREFIX, 80);
 std::list<std::string> messages;
 std::string username;
-std::stringstream ss;
 
 
 /* This command is set as the default command for the server.  It
@@ -33,9 +32,6 @@ std::stringstream ss;
  * the buzzDelay variable, affecting the output of the speaker */
 void chatCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, bool tail_complete)
 {
-//  ss << "asdf";
-//  std::string str(ss.str());
-//  server.print(str.c_str());
   if (type == WebServer::POST)
   {
     bool repeat;
@@ -53,9 +49,9 @@ void chatCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, 
        * named "buzz" here. */
       if (strcmp(name, "message") == 0)
       {
-	/* use the STRing TO Unsigned Long function to turn the string
-	 * version of the delay number into our integer buzzDelay
-	 * variable */
+    /* use the STRing TO Unsigned Long function to turn the string
+     * version of the delay number into our integer buzzDelay
+     * variable */
 
           messages.push_front(value);
       }
@@ -83,30 +79,21 @@ void chatCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, 
   {
     /* store the HTML in program memory using the P macro */
 
-    std::string html =
-    "<html>\
-    <meta http-equiv='content-type' content='text/html; charset=UTF-8'>\
-    <body>\
-    <style type='text/css'>\
-        body {\
-            font: 16px Helvetica, Arial;\
-        }\
-        h2 {\
-            margin-top: 2em;\
-        }\
-        .message span {\
-            padding-right: 2em;\
-        }\
-    </style>\
-    <h1>Arduino Webchat ({{IP-Adresse/buzz}})</h1>\
-    <p>Livio Bieri & Marius Küng clabC 2iCa</p>\
-    <form action='/chat' method='POST'>\
-        <p><label>Benutzername:</label><input type='text' name='username' value='";
-        server.print(html.c_str());
-        server.print(username.c_str());
-        server.print("'/></p><p><label>Nachricht:</label><input type='text' name='message'/></p><input type='hidden' value='{{username}}'><input type='submit' value='Senden'></form><h2>Chat</h2><div id='messages'>");
+    server.print("<html>");
+    server.print("<meta http-equiv='content-type' content='text/html; charset=UTF-8'>");
+    server.print("<body>");
+    server.print("<style type='text/css'>body {font: 16px Helvetica, Arial;}h2 {margin-top: 2em;}.message span {padding-right: 2em;}</style>");
+    server.print("<h1>Arduino Webchat ({{IP-Adresse/buzz}})</h1>");
+    server.print("<p>Livio Bieri & Marius Küng clabC 2iCa</p>");
+    server.print("<form action='/chat' method='POST'>");
+    server.print("<p><label>Benutzername:</label><input type='text' name='username' value='");
+    server.print(username.c_str());
+    server.print("'/></p>");
 
-   
+    server.print("<p><label>Nachricht:</label><input type='text' name='message'/></p>");
+    server.print("<input type='submit' value='Senden'></form>");
+    server.print("<h2>Chat</h2>");
+    server.print("<div id='messages'>");
 
     for (std::list<std::string>::const_iterator iter = messages.begin(); iter != messages.end(); ++iter) {
         server.print("<p class='message'><span><strong>");
@@ -115,9 +102,7 @@ void chatCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, 
         server.print(iter->c_str());
         server.print("</p>");
     }
-
     server.print("</div></body></html>");
-
   }
 }
 
@@ -149,4 +134,3 @@ void loop()
   // process incoming connections one at a time forever
   webserver.processConnection();
 }
-
