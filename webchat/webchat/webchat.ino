@@ -23,7 +23,6 @@ static uint8_t mac[] = {0x90, 0xA2, 0xDA, 0x0D, 0xEA, 0x17 };
 #define PREFIX "/chat"
 WebServer webserver(PREFIX, 80);
 std::list<std::string> messages;
-std::string username;
 
 
 /* This command is set as the default command for the server.  It
@@ -49,19 +48,14 @@ void chatCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, 
        * named "buzz" here. */
       if (strcmp(name, "message") == 0)
       {
-    /* use the STRing TO Unsigned Long function to turn the string
-     * version of the delay number into our integer buzzDelay
-     * variable */
-
+	/* use the STRing TO Unsigned Long function to turn the string
+	 * version of the delay number into our integer buzzDelay
+	 * variable */
+          
+          if (messages.size() == 7) {
+            messages.pop_back();
+          }
           messages.push_front(value);
-      }
-      if (strcmp(name, "username") == 0)
-      {
-  /* use the STRing TO Unsigned Long function to turn the string
-   * version of the delay number into our integer buzzDelay
-   * variable */
-
-          username = value;
       }
     } while (repeat);
 
@@ -82,23 +76,17 @@ void chatCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, 
     server.print("<html>");
     server.print("<meta http-equiv='content-type' content='text/html; charset=UTF-8'>");
     server.print("<body>");
-    server.print("<style type='text/css'>body {font: 16px Helvetica, Arial;}h2 {margin-top: 2em;}.message span {padding-right: 2em;}</style>");
-    server.print("<h1>Arduino Webchat ({{IP-Adresse/buzz}})</h1>");
+    server.print("<style type='text/css'>body {font: 16px Helvetica, Arial;}h2 {margin-top: 2em;}</style>");
+    server.print("<h1>Arduino Webchat (http://10.84.98.16/chat)</h1>");
     server.print("<p>Livio Bieri & Marius Küng clabC 2iCa</p>");
     server.print("<form action='/chat' method='POST'>");
-    server.print("<p><label>Benutzername:</label><input type='text' name='username' value='");
-    server.print(username.c_str());
-    server.print("'/></p>");
-
-    server.print("<p><label>Nachricht:</label><input type='text' name='message'/></p>");
+    server.print("<p><label>Nachricht:</label><input type='text' name='message'/ maxlength='7'></p>");
     server.print("<input type='submit' value='Senden'></form>");
     server.print("<h2>Chat</h2>");
     server.print("<div id='messages'>");
 
     for (std::list<std::string>::const_iterator iter = messages.begin(); iter != messages.end(); ++iter) {
-        server.print("<p class='message'><span><strong>");
-        server.print(username.c_str());
-        server.print("</strong> 30.05.14 11:00:</span>");
+        server.print("<p class='message'>");
         server.print(iter->c_str());
         server.print("</p>");
     }
@@ -134,3 +122,4 @@ void loop()
   // process incoming connections one at a time forever
   webserver.processConnection();
 }
+
