@@ -94,16 +94,6 @@ void chatCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, 
     <h2>Chat</h2>\
     <div id='messages'>";
 
-
-
-
-    "<body>\
-    <form action='/chat' method='POST'>\
-        <label>Message:</label><input type='text' name='message'/>\
-        <input type='submit' value='Senden'>\
-    </form>\
-    <div id='messages'>";
-
    server.print(html.c_str());
 
     for (std::list<std::string>::const_iterator iter = messages.begin(); iter != messages.end(); ++iter) {
