@@ -1,7 +1,6 @@
-# Webchat clab Projekt###### Verfasser: Marius King und Livio Bieri.##### Beschreibung> Lorem
-##### Kurze Bedienungsanleitung
-> Lorem
-Foto der AnordnungEv. MovieMateriallisteSchaltplan##### Erkenntnisse und Schwierigkeiten
+# Webchat clab Projekt###### Verfasser: Marius King und Livio Bieri.##### Beschreibung> Kleiner einfacher HTTP Webchat der nur das Ardunio Ethernet Shield verwendet. Damit wir nicht HTTP selbst von Grund auf implementieren müssen haben wir eine kleine Library namens Webduino verwendet die diese Tasks für uns übernimmt.
+> Die Implementation ist denkbar einfach: Die Chatnachrichten werden in einer `std::list<std::string>>` gespeichert. Eine neue Nachricht kann per POST `?message=bla` hinzugefügt werden. 
+![image](http://arduino.cc/en/uploads/Guide/ArduinoWithEthernetShield.jpg)![image](https://github.com/livioso/exploring-arduino-clab/tree/master/webchat/webchat/webchat.png)##### Erkenntnisse und Schwierigkeiten
 
 + **Erkenntnisse** 🐣
     + Es stehen erstaunlich viele Libraries stehen zur Verfügung
@@ -15,5 +14,4 @@
     + Casting von `std::string` zu `char[]` mit `.c_str`
     
 + **Probleme** 💩
-    + *Memorybeschränkungen* (e.g. Buffersize) sind etwas umständlich
-    + Probleme mit  
+    + *Memorybeschränkungen* (e.g. Buffersize) sind etwas umständlich 
